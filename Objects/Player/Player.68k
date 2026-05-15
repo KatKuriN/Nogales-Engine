@@ -68,7 +68,7 @@ LockTime:       dc.b 1
 
  ; ---------------------------------------------------------------------------
 
-Obj_Player:                  
+ObjPlayer:                  
 ;        tst.w   editMode.w      ; Load into editor object if enabled
 ;        bne.w   EditMode
 

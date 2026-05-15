@@ -17,7 +17,7 @@ TILE.DIGIT2	EQU  $470+$8000
 ; Development Object 1 - seems to test sprite rendering with _objectDraw
 ; ---------------------------------------------------------------------------
 
-Obj_Dev1:                                
+ObjDev1:                                
 	moveq   #0,d0
 	move.b  obj.Action(a0),d0
 	move.w  .Index(pc,d0.w),d1
@@ -76,7 +76,7 @@ SprPat_DevTest:
 ; Development Object 2 - also looks to test sprite rendering
 ; ---------------------------------------------------------------------------
 
-Obj_Dev2:
+ObjDev2:
 	moveq   #0,d0
 	move.b  obj.Action(a0),d0
 	move.w  .Index(pc,d0.w),d1
@@ -119,7 +119,7 @@ Dev2_Delete:
 ; Maybe used for testing layout reading/loading? Unsure.
 ; ---------------------------------------------------------------------------
 
-Obj_Dev3:                                
+ObjDev3:                                
 
 	moveq   #0,d0
 	move.b  obj.Action(a0),d0
@@ -174,7 +174,7 @@ Dev3_Exit:
 ; It expects its VRAM at tile 0x4F0 to contain characters 1-9 and hex A-F
 ; ---------------------------------------------------------------------------
 
-Obj_DevDigit1:                                
+ObjDevDigit1:                                
 	moveq   #0,d0
 	move.b  obj.Action(a0),d0
 	move.w  .Index(pc,d0.w),d1
@@ -215,7 +215,7 @@ SprPat_Digits:
 ; ---------------------------------------------------------------------------
 
 
-Obj_DevDigit2:                                
+ObjDevDigit2:                                
 	moveq   #0,d0
 	move.b  obj.Action(a0),d0
 	move.w  .Index(pc,d0.w),d1

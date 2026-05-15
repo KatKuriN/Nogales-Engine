@@ -120,99 +120,99 @@ OBJDEF      macro   addr, id
 ObjectIndex:
 	rsreset
 	rs.b	1
-	OBJDEF	Obj_Player,		OBJNO_PLAYER         
-	OBJDEF	Obj_Dev1,		OBJNO_DEV1    
-	OBJDEF	Obj_Dev2,		OBJNO_DEV2
-	OBJDEF	Obj_Dev3,		OBJNO_DEV3
-	OBJDEF	Obj_DevDigit1,		OBJNO_DIGIT1
-	OBJDEF	Obj_DevDigit2,		OBJNO_DIGIT2
-	OBJDEF	Obj_Dummy,		OBJNO_DEV6
-	OBJDEF	Obj_PlayerTest,		OBJNO_PLAYTEST
-	OBJDEF	Obj_Dummy,		OBJNO_TITLEMISC
-	OBJDEF	Obj_Dummy,		OBJNO_TITLESONIC          
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
-	OBJDEF	Obj_Dummy
+	OBJDEF	ObjPlayer,		OBJNO_PLAYER         
+	OBJDEF	ObjDev1,		OBJNO_DEV1    
+	OBJDEF	ObjDev2,		OBJNO_DEV2
+	OBJDEF	ObjDev3,		OBJNO_DEV3
+	OBJDEF	ObjDevDigit1,		OBJNO_DIGIT1
+	OBJDEF	ObjDevDigit2,		OBJNO_DIGIT2
+	OBJDEF	ObjDummy,		OBJNO_DEV6
+	OBJDEF	ObjPlayerTest,		OBJNO_PLAYTEST
+	OBJDEF	ObjDummy,		OBJNO_TITLEMISC
+	OBJDEF	ObjDummy,		OBJNO_TITLESONIC          
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
+	OBJDEF	ObjDummy
 
 
 .Null:
-Obj_Dummy:
+ObjDummy:
 	bra.w	_objectDelete
 	
 ; ---------------------------------------------------------------------------
