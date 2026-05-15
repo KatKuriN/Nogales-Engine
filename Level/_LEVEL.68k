@@ -102,7 +102,7 @@ GM_LEVEL:
 
 	move.w  #$202F,palFadeArgs.w
 	bsr.w   PalFadeIn.UserArgs
-	move.w  #$8000+%00010100,VDPCTRL
+;	move.w  #$8000+%00010100,VDPCTRL
 	bsr.w   DebugArtLoad
 
 LevelLoop:                              
@@ -115,7 +115,7 @@ LevelLoop:
 	bsr.w   GetObjects
 	bsr.w   RunObjects                        
 	bsr.w   CameraScroll
-	bsr.w   SetHblankLine
+;	bsr.w   SetHblankLine
 	bsr.w   CalcWaterWaves
 	bsr.w   DrawObjects
 	bsr.w   CyclePalettes

@@ -64,13 +64,13 @@ ArtList_GreenHill:    dc.w        $B
         dc.w $6B00
         dc.l ArtNem_PurpleRock
         dc.w $7A00
-        dc.l ArtNem_GaniGani
+        dc.l ArtNem_EnemyPig
         dc.w $8000
-        dc.l ArtNem_Beeton
+        dc.l ArtNem_EnemyBee
         dc.w $8880
-        dc.l ArtNem_BataBata
+        dc.l ArtNem_EnemyPiranha
         dc.w $8F60
-        dc.l ArtNem_Meleon
+        dc.l ArtNem_EnemyChameleon
         dc.w $9360
         dc.l ArtNem_Motora
         dc.w $9E00
@@ -112,7 +112,7 @@ ArtList_Marble: dc.w 9
         dc.w $71C0
         dc.l ArtNem_LavaGeyser
         dc.w $7500
-        dc.l ArtNem_Beeton
+        dc.l ArtNem_EnemyBee
         dc.w $8880
         dc.l ArtNem_Yadrin
         dc.w $8F60
@@ -138,7 +138,7 @@ ArtList_StarLight:    dc.w        $A
         dc.w $68A0
         dc.l ArtNem_GaniGani
         dc.w $8000
-        dc.l ArtNem_Beeton
+        dc.l ArtNem_EnemyBee
         dc.w $8880
         dc.l ArtNem_StarLight2
         dc.w $9000
@@ -168,7 +168,7 @@ ArtList_Sparkling:    dc.w        4
         dc.w 0
         dc.l ArtNem_GaniGani
         dc.w $8000
-        dc.l ArtNem_Beeton
+        dc.l ArtNem_EnemyBee
         dc.w $8880
         dc.l ArtNem_Yadrin
         dc.w $8F60
