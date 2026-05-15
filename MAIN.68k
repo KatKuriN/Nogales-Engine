@@ -891,8 +891,14 @@ AngleTable:
 ; ---------------------------------------------------------------------------
 
         include "Objects/Development/Dev Objects.68k"
+        include "Objects/Title/Title Objects & _objectAnimate.68k"
         include "Objects/Objects.68k"   ; Main functions for objs
 
+        include "Objects/Player/Player.68k"
+        include "Objects/Object Collision.68k"
+        include "Objects/Player/Player Test.68k"
+
+        
         include "Art/System Art Lists.asm"
         include "DATA.asm"
 ; ---------------------------------------------------------------------------

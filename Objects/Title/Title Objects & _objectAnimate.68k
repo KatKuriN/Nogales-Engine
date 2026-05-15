@@ -129,11 +129,93 @@ TitleMisc_PressStart:
 ; ---------------------------------------------------------------------------
 
 AniSpr_TitleSonic:
-	; wait to use linker
-AniSpr_TitleInfo:
-	; wait to use linker
+	dc.w titlesonicchg0-*
+titlesonicchg0:
+	dc.b   7,  0,  1,  2,  3,  4,  5,  6
+	dc.b   7,$FE,  2
+	even
 
-	; ugh
-	; The code for animation scripts globally used by objects follows
-	; Then, comes its mappings.
-	; so wait to use a linker. again.
+AniSpr_TitleInfo:
+	dc.w pressstartchg0-*
+pressstartchg0:
+	dc.b $1F,  0,  1,$FF
+	even
+
+_objectAnimate:
+	moveq   #0,d0
+	move.b  obj.Anim(a0),d0
+	cmp.b   obj.LastAnim(a0),d0
+	beq.s   .DoAnim
+	move.b  d0,obj.LastAnim(a0)
+	move.b  #0,obj.AnimFrame(a0)
+	move.b  #0,obj.FrameTimer(a0)
+
+.DoAnim:
+	add.w   d0,d0
+	adda.w  (a1,d0.w),a1
+	subq.b  #1,obj.FrameTimer(a0)
+	bpl.s   .Exit
+	move.b  (a1),obj.FrameTimer(a0)
+	moveq   #0,d1
+	move.b  obj.AnimFrame(a0),d1
+	move.b  1(a1,d1.w),d0
+	bmi.s   .HandleFlags
+
+.Finish:
+	move.b  d0,d1
+	andi.b  #$1F,d0
+	move.b  d0,obj.Frame(a0)
+	move.b  obj.Status(a0),d0
+	andi.b  #3,d0
+	andi.b  #$FC,obj.Render(a0)
+	lsr.b   #5,d1
+	eor.b   d0,d1
+	or.b    d1,obj.Render(a0)
+	addq.b  #1,obj.AnimFrame(a0)
+
+.Exit:
+	rts
+; ---------------------------------------------------------------------------
+
+.HandleFlags:
+	addq.b  #1,d0
+	bne.s   .NotLoop
+	move.b  #0,obj.AnimFrame(a0)
+	move.b  1(a1),d0
+	bra.s   .Finish
+; ---------------------------------------------------------------------------
+
+.NotLoop:
+	addq.b  #1,d0
+	bne.s   .NotBack
+	move.b  2(a1,d1.w),d0
+	sub.b   d0,obj.AnimFrame(a0)
+	sub.b   d0,d1
+	move.b  1(a1,d1.w),d0
+	bra.s   .Finish
+; ---------------------------------------------------------------------------
+
+.NotBack:
+	addq.b  #1,d0
+	bne.s   .NotChgAni
+	move.b  2(a1,d1.w),obj.Anim(a0)
+
+.NotChgAni:
+	addq.b  #1,d0
+	bne.s   .NotRoutine
+	addq.b  #2,obj.Action(a0)
+
+.NotRoutine:
+	addq.b  #1,d0
+	bne.s   .NotReset
+	move.b  #0,obj.AnimFrame(a0)
+	clr.b   obj.SubAction(a0)
+
+.NotReset:
+	rts
+
+; ---------------------------------------------------------------------------
+SprPat_TitleMisc:
+	include	"Objects/Title/TITLEMISC_PAT.asm"
+SprPat_TitleSonic:
+	include	"Objects/Title/TITLESONIC_PAT.asm"
