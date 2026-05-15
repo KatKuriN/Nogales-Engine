@@ -1,0 +1,342 @@
+
+
+
+GM_LEVEL:                               
+	bsr.w   ClearArtListQueue
+	moveq   #0,d0
+	move.b  zone.w,d0
+	lsl.w   #4,d0
+	lea     LevelHeaders,a2
+	lea     (a2,d0.w),a2
+	moveq   #0,d0
+	move.b  (a2),d0
+	bsr.w   LoadArtList                     
+	moveq   #1,d0
+	bsr.w   LoadArtList
+	bsr.w   PalFadeOut
+	bsr.w   InitScreen
+	lea     VDPCTRL,a6
+	move.w  #$8B03,(a6)
+	move.w  #$8230,(a6)
+	move.w  #$8407,(a6)
+	move.w  #$857C,(a6)
+	move.w  #0,hblankWaterFlag.w
+	move.w  #$8AAF,hblankLine.w
+	move.w  #$8004,(a6)
+	move.w  #$8720,(a6)
+	lea     OBJECTRAM.w,a1
+	moveq   #0,d0
+	move.w  #((OBJSZ*20)/4)-1,d1
+
+.ClearObjects:                         
+	move.l  d0,(a1)+
+	dbf     d1,.ClearObjects
+	lea     cameraAPosX.w,a1
+	moveq   #0,d0
+	move.w  #$40-1,d1
+
+.ClearCams:                            
+	move.l  d0,(a1)+
+	dbf     d1,.ClearCams
+	moveq   #3,d0
+	bsr.w   PalLoad
+	moveq   #0,d0
+	move.b  zone.w,d0
+
+.WaitUntilDone:                        
+	move.b  #vbID_LVLSTART,vblankCmd.w
+	bsr.w   VSync
+	bsr.w   GetObjects
+	bsr.w   RunObjects
+	bsr.w   DrawObjects
+	bsr.w   ProcessArtLoading
+	tst.l   decompQueue.w
+	bne.s   .WaitUntilDone
+	moveq   #3,d0
+	bsr.w   PalQueueForFade
+	bsr.w   CameraInit
+	bsr.w   CameraScroll
+	bsr.w   ProcessLevelHeader
+	bsr.w   DrawCamsInit
+	
+	; this is really gross lol
+
+	move.l  #LvlCol_GreenHill,collisionPtr.w
+	cmpi.b  #ZONENO.LZ,zone.w
+	bne.s   .ChkMarble
+	move.l  #LvlCol_Labyrinth,collisionPtr.w
+
+.ChkMarble:
+	cmpi.b  #ZONENO.MZ,zone.w
+	bne.s   .ChkStarLight
+	move.l  #LvlCol_Marble,collisionPtr.w
+
+.ChkStarLight:
+	cmpi.b  #ZONENO.SLZ,zone.w
+	bne.s   .ChkSparkling
+	move.l  #LvlCol_StarLight,collisionPtr.w
+
+.ChkSparkling:
+	cmpi.b  #ZONENO.SZ,zone.w
+	bne.s   .ChkClockWork
+	move.l  #LvlCol_Sparkling,collisionPtr.w
+
+.ChkClockWork:
+	cmpi.b  #ZONENO.CWZ,zone.w
+	bne.s   .NoCollision
+	move.l  #LvlCol_Clockwork,collisionPtr.w
+
+.NoCollision:
+	move.b  #OBJNO_PLAYER,objSlot00.w    
+;	move.b  #$21,(objSlot01).w
+	btst    #6,joypad.w
+	beq.s   .NoDebug
+	move.b  #1,debug.w
+	bsr.w   DebugSetup
+.NoDebug:
+	move.w  #0,joypadMirr.w
+	move.w  #0,joypad.w
+	move.w  #1800,genericTimer.w
+	move.b  #vbID_LEVEL,vblankCmd.w
+	bsr.w   VSync
+
+	move.w  #$202F,palFadeArgs.w
+	bsr.w   PalFadeIn.UserArgs
+	move.w  #$8000+%00010100,VDPCTRL
+	bsr.w   DebugArtLoad
+
+LevelLoop:                              
+	bsr.w   PauseGame
+	move.b  #vbID_LEVEL,vblankCmd.w
+	bsr.w   VSync
+	addq.w  #1,frameCnt.w
+	move.w  joypad.w,joypadMirr.w
+
+	bsr.w   GetObjects
+	bsr.w   RunObjects                        
+	bsr.w   CameraScroll
+	bsr.w   SetHblankLine
+	bsr.w   CalcWaterWaves
+	bsr.w   DrawObjects
+	bsr.w   CyclePalettes
+	bsr.w   ProcessArtLoading
+
+	tst.w   restart.w
+	bne.w   GM_LEVEL
+
+	cmpi.b  #GMNO_LEVEL,gamemode.w
+	beq.w   LevelLoop
+	rts 
+
+; ---------------------------------------------------------------------------
+; Setup Debugger onscreen digits
+; ---------------------------------------------------------------------------
+
+DebugSetup:
+	lea     DebugDigits,a0
+	lea     objSlot10.w,a1
+	move.w  #12-1,d1
+
+.LoadLoop:                             
+	move.b  #OBJNO_DIGIT1,obj.ID(a1)
+	move.w  (a0)+,obj.X(a1)
+	move.w  (a0)+,obj.YScr(a1)
+	lea     OBJSZ(a1),a1
+	dbf     d1,.LoadLoop
+	rts
+
+; ---------------------------------------------------------------------------
+
+DebugDigits: 
+	dc.w $158,$90
+	dc.w $160,$90
+	dc.w $168,$90
+	dc.w $170,$90 
+
+	dc.w $158,$98
+	dc.w $160,$98
+	dc.w $168,$98
+	dc.w $170,$98
+
+	dc.w $158,$A8
+	dc.w $160,$A8
+	dc.w $168,$A8
+	dc.w $170,$A8
+
+; ---------------------------------------------------------------------------
+; Setup Debugger onscreen digits (Older Null Variant)
+; ---------------------------------------------------------------------------
+
+DebugSetupOld:
+	lea     DebugDigitsOld,a0
+	lea     objSlot0A.w,a1
+	move.w  #51,d1
+
+.LoadLoop:                             
+	move.b  #OBJNO_DIGIT1,(a1)
+	move.w  (a0)+,obj.X(a1)
+	move.w  (a0)+,obj.YScr(a1)
+	lea     OBJSZ(a1),a1
+	dbf     d1,.LoadLoop
+	rts
+
+; ---------------------------------------------------------------------------
+
+DebugDigitsOld:
+	dc.w $158,$90
+	dc.w $160,$90
+	dc.w $168,$90
+	dc.w $170,$90
+	dc.w $180,$90
+	dc.w $188,$90
+	dc.w $190,$90
+	dc.w $198,$90
+	dc.w $158,$A0
+	dc.w $160,$A0
+	dc.w $168,$A0
+	dc.w $170,$A0
+	dc.w $180,$A0
+	dc.w $188,$A0
+	dc.w $190,$A0
+	dc.w $198,$A0
+	dc.w $158,$A8
+	dc.w $160,$A8
+	dc.w $168,$A8
+	dc.w $170,$A8
+	dc.w $180,$A8
+	dc.w $188,$A8
+	dc.w $190,$A8
+	dc.w $198,$A8
+	dc.w $158,$B0
+	dc.w $160,$B0
+	dc.w $168,$B0
+	dc.w $170,$B0
+	dc.w $180,$B0
+	dc.w $188,$B0
+	dc.w $190,$B0
+	dc.w $198,$B0
+	dc.w $158,$B8
+	dc.w $160,$B8
+	dc.w $168,$B8
+	dc.w $170,$B8
+	dc.w $180,$B8
+	dc.w $188,$B8
+	dc.w $190,$B8
+	dc.w $198,$B8
+	dc.w $100,$98
+	dc.w $108,$98
+	dc.w $110,$98
+	dc.w $118,$98
+	dc.w $128,$98
+	dc.w $130,$98
+	dc.w $138,$98
+	dc.w $140,$98
+	dc.w $128,$A8
+	dc.w $130,$A8
+	dc.w $138,$A8
+	dc.w $140,$A8
+
+; ---------------------------------------------------------------------------
+
+DebugArtLoad:
+	VDPCMD  move.l,$9E00,VRAM,WRITE,VDPCTRL
+
+	lea     ArtUnc_Text,a0
+	move.w  #$9F,d1
+	bsr.s   .DebugLoadLoop
+
+	lea     ArtUnc_Text+$220,a0
+	move.w  #$16F,d1
+	bsr.s   .DebugLoadLoop
+
+	VDPCMD  move.l,$D000,VRAM,WRITE,VDPCTRL
+
+	lea     ArtUnc_Text,a0
+	move.w  #$9F,d1
+	bsr.s   .DebugLoadLoop
+
+	lea     ArtUnc_Text+$220,a0
+	move.w  #$16F,d1
+
+.DebugLoadLoop:
+	move.w  (a0)+,VDPDATA
+	dbf     d1,.DebugLoadLoop
+	rts
+
+; ---------------------------------------------------------------------------
+
+.ColorConv:
+	moveq   #0,d0
+	move.b  (a0)+,d0
+	ror.w   #1,d0
+	lsr.b   #3,d0
+	rol.w   #1,d0
+	move.b  .ColorConvTbl(pc,d0.w),d2
+	lsl.w   #8,d2
+	moveq   #0,d0
+	move.b  (a0)+,d0
+	ror.w   #1,d0
+	lsr.b   #3,d0
+	rol.w   #1,d0
+	move.b  .ColorConvTbl(pc,d0.w),d2
+	move.w  d2,VDPDATA
+	dbf     d1,.DebugLoadLoop ; fractured
+	rts
+
+; ---------------------------------------------------------------------------
+
+.ColorConvTbl: 
+	dc.b   0
+	dc.b   6
+	dc.b $60
+	dc.b $66
+
+; ---------------------------------------------------------------------------
+; Calculate window plane positions for a wavy effect in HBLANK
+; ---------------------------------------------------------------------------
+
+CalcWaterWaves:
+	lea     globalBuffer.w,a0
+	move.w  waterCnt.w,d2
+	move.w  #$9100,d3       ; Set window plane register
+	move.w  #256-1,d7
+
+.Loop:
+	move.w  d2,d0
+	bsr.w   CalcSinCos
+	asr.w   #4,d0
+	bpl.s   .SkipNegative  ; Filter negative values
+	moveq   #0,d0
+
+.SkipNegative:
+	andi.w  #$1F,d0
+	move.b  d0,d3
+	move.w  d3,(a0)+
+	addq.w  #2,d2
+	dbf     d7,.Loop
+	addq.w  #2,waterCnt.w
+	rts
+
+
+; ---------------------------------------------------------------------------
+; Set Water Line for HBLANK firing
+; This is horribly hacky, but I really can't be bothered right now.
+; ---------------------------------------------------------------------------
+
+
+SetHblankLine:
+	move.w  cameraZPosY.w,d0
+	cmpi.w  #-16,d0
+	bhi.s   .DoZ
+	cmpi.b  #224-1,hblankLine+1.w
+	beq.s   .Exit
+.DoZ:
+	neg.w   d0
+	subi.b  #48+1,d0
+	cmpi.b  #222,d0
+	bhs.s   .Exit
+	move.b  d0,hblankLine+1.w
+	rts
+.Exit:
+	move.b  #224-1,hblankLine+1.w
+	rts
