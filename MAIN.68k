@@ -900,12 +900,13 @@ AngleTable:
 
 	include "Objects/Player/Player.68k"
 	include "Objects/Object Collision.68k"
+	include "Objects/Player/Player Obj Collision.asm"
 	include "Objects/Player/Player Test.68k"
 
 
 	include "Art/System Art Lists.asm"
 	include "DATA.asm"
-	
+
 ; ---------------------------------------------------------------------------
 ; Level header macro tmp
 ; ---------------------------------------------------------------------------

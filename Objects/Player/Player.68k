@@ -118,7 +118,7 @@ Player_Main:
         move.b  angleBack.w,play.FootBack(a0)
 
         bsr.w   _playAnimate            ; Handle Sonic's animation
-        ;bsr.w   _playObjInteract        ; Handle player/object interactions           
+        bsr.w   _playObjCollision        ; Handle player/object interactions           
         ;bsr.w   _playSpecialLvlChunks   ; Handle special chunks
         bsr.w   _playDynamicGFX         ; Handle dynamic GFX in VRAM
         rts
