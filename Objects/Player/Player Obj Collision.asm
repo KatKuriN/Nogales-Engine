@@ -159,8 +159,8 @@ _objcolTypeEnemy:
                 bset    #7,obj.Status(a1)
 ;                moveq   #10,d0
 ;                bsr.w   _hudAddPoints
-                move.b  #0,obj.No(a1) ; make into explosion
-                move.b  #0,obj.Action(a1) ; clear action
+                move.b  #OBJNO_BOMBHIT,obj.No(a1)       ; make into explosion
+                move.b  #0,obj.Action(a1)               ; clear action
                 tst.w   obj.YSpeed(a0)
                 bmi.s   .BounceDown
                 move.w  obj.Y(a0),d0
