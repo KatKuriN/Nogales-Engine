@@ -66,8 +66,8 @@ Pig_Main:
 	move.w	.Subdex(pc,d0.w),d1
 	jsr	.Subdex(pc,d1.w)
 	lea	AniSpr_Pig,a1
-	bsr.w	_objectAnimate
-	bra.w	_objectChkDespawn
+	bsr.w   _objectAnimate
+	bra.w	_objectDraw
 
 ; ---------------------------------------------------------------------------
 .Subdex:
@@ -231,3 +231,154 @@ BallBomb_Main:
 BallBomb_Done:
 	bsr.w	_objectDelete
 	rts
+
+; ---------------------------------------------------------------------------
+; Bomb/Missile Explosion
+; ---------------------------------------------------------------------------
+
+ObjBombHit:
+	moveq	#0,d0
+	move.b	obj.Action(a0),d0
+	move.w	.Index(pc,d0.w),d1
+	jmp	.Index(pc,d1.w)
+; ---------------------------------------------------------------------------
+.Index:
+	dc.w	BombHit_Init-.Index
+	dc.w	BombHit_Main-.Index
+; ---------------------------------------------------------------------------
+
+BombHit_Init:
+	addq.b	#2,obj.Action(a0)
+	move.l	#SprPat_BombHit,obj.Pat(a0)
+	move.w	#$41C,obj.Tile(a0)
+	move.b	#4,obj.Render(a0)
+	move.b	#2,obj.Priority(a0)
+	move.b	#0,obj.Collision(a0)
+	move.b	#$C,obj.XRender(a0)
+	move.b	#9,obj.FrameTimer(a0)
+	move.b	#0,obj.Frame(a0)
+	move.w	#SFXNO_BOMBHIT,d0
+	jsr	SndSetSFX
+
+BombHit_Main:
+	subq.b	#1,obj.FrameTimer(a0)
+	bpl.s	.Exit
+	move.b	#9,obj.FrameTimer(a0)
+	addq.b	#1,obj.Frame(a0)
+	cmpi.b	#4,obj.Frame(a0)
+	beq.w 	_objectDelete
+
+.Exit:
+	bra.w   _objectDraw
+
+; ---------------------------------------------------------------------------
+; Light explosion, used for items and exploding enemies
+; ---------------------------------------------------------------------------
+
+ObjLightExpl:
+	moveq	#0,d0
+	move.b	obj.Action(a0),d0
+	move.w	.Index(pc,d0.w),d1
+	jmp	.Index(pc,d1.w)
+; ---------------------------------------------------------------------------
+.Index:
+	dc.w	LightExplosion_Init-.Index
+	dc.w	LightExplosion_Main-.Index
+	dc.w	_explosionsAnimate-.Index
+; ---------------------------------------------------------------------------
+
+LightExplosion_Init:
+	addq.b	#2,obj.Action(a0)
+	bsr.w	_objectFindFreeSlot
+	bne.s	LightExplosion_Main
+	move.b	#$28,obj.No(a1)
+	move.w	obj.X(a0),obj.X(a1)
+	move.w	obj.Y(a0),obj.Y(a1)
+
+LightExplosion_Main:
+	addq.b	#2,obj.Action(a0)
+	move.l	#MapSpr_LightExplosion,obj.Pat(a0)
+	move.w	#$5A0,obj.Tile(a0)
+	move.b	#4,obj.Render(a0)
+	move.b	#2,obj.Priority(a0)
+	move.b	#0,obj.Collision(a0)
+	move.b	#$C,obj.XRender(a0)
+	move.b	#7,obj.FrameTimer(a0)
+	move.b	#0,obj.Frame(a0)
+	move.w	#SFXNO_POP2,d0
+	jsr	SndSetSFX.l
+
+_explosionsAnimate:
+	subq.b	#1,obj.FrameTimer(a0)
+	bpl.s	.Exit
+	move.b	#7,obj.FrameTimer(a0)
+	addq.b	#1,obj.Frame(a0)
+	cmpi.b	#5,obj.Frame(a0)
+	beq.w	_objectDelete
+
+.Exit:
+	bra.w	_objectDraw
+
+
+; ---------------------------------------------------------------------------
+; Heavy red/orange explosion, like the mobile bomb enemy or boss explosions
+; ---------------------------------------------------------------------------
+
+ObjHeavyExpl:
+	moveq	#0,d0
+	move.b	obj.Action(a0),d0
+	move.w	.Index(pc,d0.w),d1
+	jmp	.Index(pc,d1.w)
+; ---------------------------------------------------------------------------
+.Index:
+	dc.w	HeavyExplosion_Init-.Index
+	dc.w	_explosionsAnimate-.Index
+; ---------------------------------------------------------------------------
+
+HeavyExplosion_Init:
+	addq.b	#2,obj.Action(a0)
+	move.l	#MapSpr_HeavyExplosion,obj.Pat(a0)
+	move.w	#$5A0,obj.Tile(a0)
+	move.b	#4,obj.Render(a0)
+	move.b	#2,obj.Priority(a0)
+	move.b	#0,obj.Collision(a0)
+	move.b	#$C,obj.XRender(a0)
+	move.b	#7,obj.FrameTimer(a0)
+	move.b	#0,obj.Frame(a0)
+	move.w	#$C4,d0
+	jmp	SndSetSFX.l
+
+
+AniSpr_Pig:
+	include "Objects/Enemy/Pig & Bomb/PIG_ANI.asm"
+SprPat_Pig:
+	include "Objects/Enemy/Pig & Bomb/PIG_PAT.asm"
+SprPat_BallBomb:
+	include "Objects/Enemy/Pig & Bomb/BALLBOMB_PAT.asm"
+SprPat_BombHit:
+	include "Objects/Enemy/Pig & Bomb/BOMBHIT_PAT.asm"
+
+
+MapSpr_LightExplosion:
+		dc.w lexplosp0-MapSpr_LightExplosion
+		dc.w lexplosp1-MapSpr_LightExplosion
+		dc.w lexplosp2-MapSpr_LightExplosion
+		dc.w lexplosp3-MapSpr_LightExplosion
+		dc.w lexplosp4-MapSpr_LightExplosion
+lexplosp0:	dc.b   1, -8,  9,  0,  0,-$C
+lexplosp1:	dc.b   1,-$10, $F,  0,  6,-$10
+lexplosp2:	dc.b   1,-$10, $F,  0,$16,-$10
+lexplosp3:	dc.b   4,-$14, $A,  0,$26,-$14,-$14,  5
+		dc.b   0,$2F,  4,  4,  5,$18,$2F,-$14
+		dc.b  -4, $A,$18,$26, -4
+lexplosp4:	dc.b   4,-$14, $A,  0,$33,-$14,-$14,  5
+		dc.b   0,$3C,  4,  4,  5,$18,$3C,-$14
+		dc.b  -4, $A,$18,$33, -4
+MapSpr_HeavyExplosion:
+		dc.w lexplosp0-MapSpr_HeavyExplosion
+		dc.w hexplosp1-MapSpr_HeavyExplosion
+		dc.w hexplosp2-MapSpr_HeavyExplosion
+		dc.w lexplosp3-MapSpr_HeavyExplosion
+		dc.w lexplosp4-MapSpr_HeavyExplosion
+hexplosp1:	dc.b   1,-$10, $F,  0,$40,-$10
+hexplosp2:	dc.b   1,-$10, $F,  0,$50,-$10

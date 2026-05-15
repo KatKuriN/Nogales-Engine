@@ -29,7 +29,7 @@ ObjEnemyBee:
 
 Bee_Init:
 	addq.b  #2,obj.Action(a0)
-	move.l  #SprPat_Bee,obj.Pat(a0
+	move.l  #SprPat_Bee,obj.Pat(a0)
 	move.w  #$444,obj.Tile(a0)
 	move.b  #4,obj.Render(a0)
 	move.b  #3,obj.Priority(a0)
@@ -43,7 +43,7 @@ Bee_Main:
 	jsr     .Subdex(pc,d1.w)
 	lea     AniSpr_Bee,a1
 	bsr.w   _objectAnimate
-	bra.w   _objectChkDespawn
+	bra.w	_objectDraw
 
 ; ---------------------------------------------------------------------------
 .Subdex:
@@ -70,7 +70,7 @@ Bee_ChkFire:
 .FireMissile:
 	bsr.w   _objectFindFreeSlot
 	bne.s   .NoSlot
-	move.b  #$23,obj.No(a1) ; '#'
+	move.b  #OBJNO_MISSILE,obj.No(a1)
 	move.w  obj.X(a0),obj.X(a1)
 	move.w  obj.Y(a0),obj.Y(a1)
 	addi.w  #28,obj.Y(a1)
@@ -159,7 +159,7 @@ ObjMissile:
 
 Missile_Init:
 	subq.w  #1,missile.Timer(a0) 	; Decrement parent timer
-	bpl.s   .ChkParentState		; If positive, branch to exit
+	bpl.s   _missileChkParent		; If positive, branch to exit
 
 	addq.b  #2,obj.Action(a0)
 	move.l  #SprPat_Missile,obj.Pat(a0)
@@ -175,17 +175,17 @@ Missile_Init:
 	move.b  #8,obj.Action(a0)
 	move.b  #$87,obj.Collision(a0)
 	move.b  #1,obj.Anim(a0)
-	bra.s   .MeleonParent
+	bra.s   _missileChameleon
 
 Missile_Bee:
-	bsr.s   .ChkParentState
+	bsr.s   _missileChkParent
 	lea     AniSpr_Missile,a1
 	bsr.w   _objectAnimate
 	bra.w   _objectDraw
 
-.ChkParentState:
+_missileChkParent:
 	movea.l	missile.Parent(a0),a1		; Get parent
-	cmpi.b	#OBJNO_LIGHTEXPL,obj.No(a1)	; Check if parent is now an explosion
+	cmpi.b	#0,obj.No(a1)			; Check if parent is now an explosion
 	beq.s	Missile_Done			; Kill if so
 	rts
 
@@ -218,8 +218,18 @@ Missile_Chameleon:
 	bpl.s   Missile_Done
 	bsr.w   _objectSetSpeed
 
-.MeleonParent:
+_missileChameleon:
 	lea     (AniSpr_Missile).l,a1
 	bsr.w   _objectAnimate
 	bsr.w   _objectDraw
 	rts
+
+AniSpr_Bee:
+	include "Objects/Enemy/Bee & Missile/BEE_ANI.asm"
+AniSpr_Missile:
+	include "Objects/Enemy/Bee & Missile/MISSILE_ANI.asm"
+SprPat_Bee:
+	include "Objects/Enemy/Bee & Missile/BEE_PAT.asm"
+SprPat_Missile:
+	include "Objects/Enemy/Bee & Missile/MISSILE_PAT.asm"
+

@@ -42,6 +42,7 @@ STAT.YDIR:	equ 1
 STAT.LIFTING:	equ 3
 STAT.PUSHED:	equ 5
 STAT.FLAG:	equ 7
+STAT.KILLED:    equ 7
 
 ; ---------------------------------------------------------------------------
 
@@ -120,42 +121,44 @@ OBJDEF      macro   addr, id
 ObjectIndex:
 	rsreset
 	rs.b	1
-	OBJDEF	ObjPlayer,		OBJNO_PLAYER
-	OBJDEF	ObjDev1,		OBJNO_DEV1
-	OBJDEF	ObjDev2,		OBJNO_DEV2
-	OBJDEF	ObjDev3,		OBJNO_DEV3
-	OBJDEF	ObjDevDigit1,		OBJNO_DIGIT1
-	OBJDEF	ObjDevDigit2,		OBJNO_DIGIT2
-	OBJDEF	ObjDummy,		OBJNO_DEV6
-	OBJDEF	ObjPlayerTest,		OBJNO_PLAYSPECIAL
-	OBJDEF	ObjDummy
-	OBJDEF	ObjDummy	
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy
-	OBJDEF	ObjTitleMisc,		OBJNO_TITLEMISC		
-	OBJDEF	ObjTitleSonic,		OBJNO_TITLESONIC
-	OBJDEF	ObjPlayerTest,		OBJNO_PLAYTEST		
-	OBJDEF	ObjBridge,		OBJNO_BRIDGE		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
+	OBJDEF	ObjPlayer,		OBJNO_PLAYER		; 1
+	OBJDEF	ObjDev1,		OBJNO_DEV1		; 2
+	OBJDEF	ObjDev2,		OBJNO_DEV2		; 3
+	OBJDEF	ObjDev3,		OBJNO_DEV3		; 4
+	OBJDEF	ObjDevDigit1,		OBJNO_DIGIT1		; 5
+	OBJDEF	ObjDevDigit2,		OBJNO_DIGIT2		; 6
+	OBJDEF	ObjDummy,		OBJNO_DEV6		; 7
+	OBJDEF	ObjDummy					; 8
+	OBJDEF	ObjPlayerTest,		OBJNO_PLAYSPECIAL	; 9
+	OBJDEF	ObjDummy					; A
+	OBJDEF	ObjDummy					; B
+	OBJDEF	ObjDummy					; C
+	OBJDEF	ObjDummy					; D
+	OBJDEF	ObjTitleMisc,		OBJNO_TITLEMISC		; E
+	OBJDEF	ObjTitleSonic,		OBJNO_TITLESONIC	; F
+	OBJDEF	ObjPlayerTest,		OBJNO_PLAYTEST		; 10
+
+	OBJDEF	ObjBridge,		OBJNO_BRIDGE		; 11		
+	OBJDEF	ObjDummy					; 12
+	OBJDEF	ObjDummy					; 13
+	OBJDEF	ObjDummy					; 14
+	OBJDEF	ObjDummy					; 15
+	OBJDEF	ObjDummy					; 16
+			
+	OBJDEF	ObjDummy					; 17
+	OBJDEF	ObjDummy					; 18
+	OBJDEF	ObjDummy					; 19
+	OBJDEF	ObjDummy					; 1A
+	OBJDEF	ObjDummy					; 1B
+	OBJDEF	ObjDummy					; 1C
+	OBJDEF	ObjDummy					; 1D
+	OBJDEF	ObjEnemyPig,		OBJNO_ENEMYPIG		; 1E	src: buta, enemy pig
+	OBJDEF	ObjDummy					; 1F	src: kani, enemy crab
+	OBJDEF	ObjBallBomb,		OBJNO_BALLBOMB		; 20	ball bomb
+	OBJDEF	ObjDummy					; 21	HUD lol (originally crab bullets?)
+	OBJDEF	ObjEnemyBee,		OBJNO_ENEMYBEE		; 22	enemy bee
+	OBJDEF	ObjMissile,		OBJNO_MISSILE		; 23	missile code
+	OBJDEF	ObjBombHit,		OBJNO_BOMBHIT		
 	OBJDEF	ObjDummy		
 	OBJDEF	ObjDummy		
 	OBJDEF	ObjDummy		
