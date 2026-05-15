@@ -5,37 +5,35 @@
 ; local object variable struct
 PLAYTILE = $780
 play            struct
-                dc.b 1
-                dc.b 1 
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1            
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
+No:             dc.b 1
+Render:         dc.b 1
+Tile:           dc.w 1
+Pat:            dc.l 1
+X:              dc.w 1
+YScr:           dc.w 1
+Y:              dc.w 1
+YSub:           dc.w 1
+XSpeed:         dc.w 1
+YSpeed:         dc.w 1
+Momentum:       dc.w 1
+YRad:           dc.b 1
+XRad:           dc.b 1
+XRender:        dc.b 1
+Priority:       dc.b 1
+Frame:          dc.b 1
+AnimFrame:      dc.b 1
+Anim:           dc.b 1
+LastAnim:       dc.b 1
+FrameTimer:     dc.b 1
+FrameMirr:      dc.b 1
+Collision:      dc.b 1
+ColliCnt:       dc.b 1
+Status:         dc.b 1
+Respawn:        dc.b 1
+Action:         dc.b 1
+SubAction:      dc.b 1
+Angle:          dc.w 1
+Args:           dc.b 1
                 dc.b 1
                 dc.b 1
                 dc.b 1
@@ -43,16 +41,6 @@ play            struct
                 dc.b 1
                 dc.b 1
                 dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1    
-                dc.b 1
-                dc.b 1
-                dc.b 1
-                dc.b 1    
 Timeout:        dc.w 1
 Invincible:     dc.w 1                  
 Speedup:        dc.w 1                  

@@ -20,7 +20,7 @@ _playObjInteract:
         bne.s   .HasColInfo
 
 .NextObj:                              
-        lea     obj.Size(a1),a1
+        lea     OBJSZ(a1),a1
         dbf     d6,.Loop
         moveq   #0,d0
         rts

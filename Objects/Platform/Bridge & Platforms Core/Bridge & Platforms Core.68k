@@ -7,6 +7,11 @@
 ; Bridge Object code.
 ; ---------------------------------------------------------------------------
 
+bridge.Children	= $29
+bridge.YOrg	= $3C
+bridge.Lifter	= $3F
+bridge.Bend	= $3E
+
 ObjBridge:
 	moveq	#0,d0
 	move.b	obj.Action(a0),d0
@@ -281,7 +286,7 @@ Bridge_StoodOn:
 	lsr.w   #4,d0
 	move.b  d0,bridge.Lifter(a0)
 	move.b  bridge.Bend(a0),d0
-	cmpi.b  #obj.Size,d0
+	cmpi.b  #OBJSZ,d0
 	beq.s   .BendCap
 	addq.b  #4,bridge.Bend(a0)
 
@@ -485,7 +490,7 @@ _bridgeChkOffscreen:
 	movea.l d0,a1
 	cmp.w   a0,d0
 	beq.s   .SkipDel
-	bsr.w   _objectDeleteChild
+	bsr.w   _objectDelete.Child
 
 .SkipDel:
 	dbf     d2,.DeleteChildren
@@ -509,3 +514,6 @@ Bridge_Null:
 Bridge_Link:     
 	bsr.w   _objectDraw
 	rts
+
+SprPat_Bridge:
+        include "Objects/Platform/Bridge & Platforms Core/BRIDGE_PAT.asm"

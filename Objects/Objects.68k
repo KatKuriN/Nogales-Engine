@@ -37,33 +37,33 @@ Args:           dc.b 1
 		ends
 ; --------------------------------------------------------------------------- 
 
-STAT.XDIR:      equ 0
-STAT.YDIR:      equ 1                  
-STAT.LIFTING:   equ 3                  
-STAT.PUSHED:    equ 5                  
-STAT.FLAG:      equ 7
+STAT.XDIR:	equ 0
+STAT.YDIR:	equ 1
+STAT.LIFTING:	equ 3
+STAT.PUSHED:	equ 5
+STAT.FLAG:	equ 7
 
 ; ---------------------------------------------------------------------------
 
-PHYS.DIR:        equ 0                  
-PHYS.AIRBORNE:   equ 1                  
-PHYS.ROLLING:    equ 2                  
-PHYS.LIFTED:    equ 3                  
-PHYS.ROLLJUMP:   equ 4                  
-PHYS.PUSH:       equ 5                  
-PHYS.WATER:      equ 6
-PHYS.FLAG:       equ 7
+PHYS.DIR:	equ 0 
+PHYS.AIRBORNE:	equ 1 
+PHYS.ROLLING:	equ 2 
+PHYS.LIFTED:	equ 3 
+PHYS.ROLLJUMP:	equ 4 
+PHYS.PUSH:	equ 5 
+PHYS.WATER:	equ 6
+PHYS.FLAG:	equ 7
 
 ; ---------------------------------------------------------------------------
 
-REND.XMIRR:      equ 0
-REND.YMIRR:      equ 1
-REND.CAMOFF:     equ 2
-REND.CAMOFF2:    equ 3
-REND.HEIGHT:     equ 4
-REND.SPTYPE:     equ 5
-REND.BEHIND:     equ 6                  
-REND.ONSCREEN:   equ 7
+REND.XMIRR:	equ 0
+REND.YMIRR:	equ 1
+REND.CAMOFF:	equ 2
+REND.CAMOFF2:	equ 3
+REND.HEIGHT:	equ 4
+REND.SPTYPE:	equ 5
+REND.BEHIND:	equ 6 
+REND.ONSCREEN:	equ 7
 
 ; ---------------------------------------------------------------------------
 
@@ -127,18 +127,16 @@ ObjectIndex:
 	OBJDEF	ObjDevDigit1,		OBJNO_DIGIT1
 	OBJDEF	ObjDevDigit2,		OBJNO_DIGIT2
 	OBJDEF	ObjDummy,		OBJNO_DEV6
-	OBJDEF	ObjPlayerTest,		OBJNO_PLAYTEST
+	OBJDEF	ObjPlayerTest,		OBJNO_PLAYSPECIAL
 	OBJDEF	ObjDummy
 	OBJDEF	ObjDummy	
 	OBJDEF	ObjDummy		
 	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy	
-
+	OBJDEF	ObjDummy
 	OBJDEF	ObjTitleMisc,		OBJNO_TITLEMISC		
-	OBJDEF	ObjTitleSonic,		OBJNO_TITLESONIC	
-
-	OBJDEF	ObjDummy		
-	OBJDEF	ObjDummy		
+	OBJDEF	ObjTitleSonic,		OBJNO_TITLESONIC
+	OBJDEF	ObjPlayerTest,		OBJNO_PLAYTEST		
+	OBJDEF	ObjBridge,		OBJNO_BRIDGE		
 	OBJDEF	ObjDummy		
 	OBJDEF	ObjDummy		
 	OBJDEF	ObjDummy		
