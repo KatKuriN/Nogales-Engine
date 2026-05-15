@@ -623,8 +623,8 @@ DrawTileMap:
 
 ; ---------------------------------------------------------------------------
 
-        include "Libraries/lib Decompress.asm"
-        include "Libraries/lib Palette.asm"
+        include "Libraries/Compression.asm"
+        include "Libraries/Palette.asm"
 
 ; ---------------------------------------------------------------------------
 ; VSync (Wait for VBLANK to fire)
@@ -875,26 +875,26 @@ AngleTable:
 ; Game Modes
 ; ---------------------------------------------------------------------------
 
-        include         "GM LOGO/_LOGO.68k"
+        include "Logo/_LOGO.68k"
 
-        include         "GM TITLE/_TITLE.68k"
+        include "Title/_TITLE.68k"
 
-        include         "GM LEVEL/_LEVEL.68k"
-
-                include         "GM LEVEL/Camera/Cam Init.asm"
-                include         "GM LEVEL/Camera/Cam Main.asm"
-                include         "GM LEVEL/Level Init.asm"
-                include         "GM LEVEL/Events/Level Events.asm"
+        include "Level/_LEVEL.68k"
+        include "Level/Camera/Cam Init.asm"
+        include "Level/Camera/Cam Main.asm"
+        include "Level/Level Init.asm"
+        include "Level/Events/Level Events.asm"
 
 
 ; ---------------------------------------------------------------------------
 ; Object System 
 ; ---------------------------------------------------------------------------
 
-        include         "Objects/Objects.asm"   ; Main functions for objs
+        include "Objects/Development/Dev Objects.68k"
+        include "Objects/Objects.68k"   ; Main functions for objs
 
-        include         "Art/System Art Lists.asm"
-        include         "DATA.asm"
+        include "Art/System Art Lists.asm"
+        include "DATA.asm"
 ; ---------------------------------------------------------------------------
 ; Level header macro tmp
 ; ---------------------------------------------------------------------------

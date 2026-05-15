@@ -145,14 +145,14 @@ loc_FC6A:
         bne.s   loc_FCE0
 
 loc_FC78:                               
-        tst.b   obj.ColProp(a1)
+        tst.b   obj.ColliCnt(a1)
         beq.s   loc_FCA2
         neg.w   obj.XSpeed(a0)
         neg.w   obj.YSpeed(a0)
         asr     obj.XSpeed(a0)
         asr     obj.YSpeed(a0)
         move.b  #0,obj.Collision(a1)
-        subq.b  #1,obj.ColProp(a1)
+        subq.b  #1,obj.ColliCnt(a1)
         bne.s   locret_FCA0
         bset    #7,obj.Status(a1)
 
@@ -164,7 +164,7 @@ loc_FCA2:
         bset    #7,obj.Status(a1)
         moveq   #$A,d0
         bsr.w   _hudAddPoints
-        move.b  #$27,obj.ID(a1) ; '''
+        move.b  #$27,obj.No(a1) ; '''
         move.b  #0,obj.Action(a1)
         tst.w   obj.YSpeed(a0)
         bmi.s   loc_FCD0
@@ -207,7 +207,7 @@ loc_FCF4:
         beq.s   loc_FD72
         bsr.w   _objectFindFreeSlot
         bne.s   loc_FD18
-        move.b  #$37,obj.ID(a1) ; '7'
+        move.b  #$37,obj.No(a1) ; '7'
         move.w  obj.X(a0),obj.X(a1)
         move.w  obj.Y(a0),obj.Y(a1)
 
@@ -307,5 +307,5 @@ loc_FE08:
 ; ---------------------------------------------------------------------------
 
 loc_FE0C:                               
-        addq.b  #1,obj.ColProp(a1)
+        addq.b  #1,obj.ColliCnt(a1)
         rts

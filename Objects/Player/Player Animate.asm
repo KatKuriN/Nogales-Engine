@@ -7,9 +7,9 @@ _playAnimate:
         lea     AniSpr_Sonic,a1
         moveq   #0,d0
         move.b  obj.Anim(a0),d0
-        cmp.b   obj.AnimLast(a0),d0
+        cmp.b   obj.LastAnim(a0),d0
         beq.s   .NoChg
-        move.b  d0,obj.AnimLast(a0)
+        move.b  d0,obj.LastAnim(a0)
         move.b  #0,obj.AnimFrame(a0)
         move.b  #0,obj.FrameTimer(a0)
 

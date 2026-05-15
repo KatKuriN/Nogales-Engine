@@ -1,15 +1,15 @@
                 ALIGN   $18000
 ArtNem_LOGO:
-        incbin  "GM LOGO/LOGO_ART.nem"
+        incbin  "Logo/LOGO_ART.nem"
 MapScr_LOGO:
-        incbin  "GM LOGO/LOGO_SCR.eni"
+        incbin  "Logo/LOGO_SCR.eni"
 
 MapScr_TITLE:
-        incbin  "GM TITLE/TITLE_SCR_A.bin"
+        incbin  "Title/TITLE_SCR_A.bin"
 ArtNem_TitleBanner:
-        incbin  "GM TITLE/TITLE_BANNER_ART.nem"
+        incbin  "Title/TITLE_BANNER_ART.nem"
 ArtNem_TitleSonic:
-        incbin  "GM TITLE/TITLE_SONIC_ART.nem"
+        incbin  "Title/TITLE_SONIC_ART.nem"
 
                 ALIGN   $1C000
 
@@ -4915,13 +4915,13 @@ ArtNem_Ricky:   dc.b   0,$12,$80,  5,$17,$15,$19,$24
                 dc.b $85,$86,$C3,$CC
                 dcb.b $3B2,$FF
 MapBlks_GreenHill:    
-                incbin  "GM LEVEL/Data/Blocks/GHZ.bin"
+                incbin  "Level/Data/Blocks/GHZ.bin"
 ArtNem_GreenHill1:    
-                incbin  "GM LEVEL/Data/Art/GHZ1.nem" 
+                incbin  "Level/Data/Art/GHZ1.nem" 
 ArtNem_GreenHill2:    
-                incbin  "GM LEVEL/Data/Art/GHZ2.nem" 
+                incbin  "Level/Data/Art/GHZ2.nem" 
 MapChnks_GHZ:   
-                incbin  "GM LEVEL/Data/Chunks/GHZ.kos" 
+                incbin  "Level/Data/Chunks/GHZ.kos" 
 MapBlk_Labyrinth:    dc.b       $40,    0,  $40,    0,  $40,    0,  $40,    0
                 dc.b   $40,    1,  $40,    2,  $40,    3,  $40,    4
                 dc.b   $40,    5,  $40,    6,  $40,    7,  $40,    8
@@ -31370,6 +31370,6 @@ byte_6C998:
                 dc.b $75
                 dc.b $5F
 
-        include "GM LEVEL/Layout/Layout Table.asm"
-        include "GM LEVEL/Objects/Layout/Object Lists Table.asm"
+        include "Level/Layout/Layout Table.asm"
+        include "Level/Objects/Layout/Object Lists Table.asm"
                 dcb.b $1C26,  $FF
