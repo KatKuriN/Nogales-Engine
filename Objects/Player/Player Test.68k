@@ -81,7 +81,9 @@ TestAnims_Delete:
         jmp     _objectDelete 
 
 
-ObjPlayerRef:                          
+ObjPlayerRef:
+        tst.b   cameraManual.w
+        beq.w   _objectDelete
         moveq   #0,d0
         move.b  obj.Action(a0),d0
         move.w  .Index(pc,d0.w),d1
@@ -93,8 +95,7 @@ ObjPlayerRef:
 ; ---------------------------------------------------------------------------
 TILECNTMAX = 22
 
-RefFrame_Init:  
-        rts                       
+RefFrame_Init:
         addq.b  #2,obj.Action(a0)
         move.b  #18,obj.YRad(a0)
         move.b  #9,obj.XRad(a0)

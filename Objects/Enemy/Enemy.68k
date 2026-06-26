@@ -17,13 +17,13 @@ ObjEnemy:
         dc.w Enemy_Main-.Index
         dc.w Enemy_Done-.Index
         dc.w Enemy_Show-.Index
-       	dc.w Enemy_Backwards-.Index
 ; ---------------------------------------------------------------------------
 
 Enemy_Init:
 	tst.b	obj.Args(a0)
 	beq.s	.Go
-	bmi.s	.Backwards
+	tst.b	cameraManual.w
+	beq.w	_objectDelete
 	move.b	obj.Args(a0),obj.Frame(a0)
 	addq.b	#6,obj.Action(a0)
 	or.b	#4,obj.Render(a0)
@@ -32,27 +32,6 @@ Enemy_Init:
 	move.b  #4,obj.Priority(a0)
 	move.b  #24,obj.XRender(a0)
 	rts
-
-.Backwards:
-        move.b  #20,obj.YRad(a0)
-        move.b  #9,obj.XRad(a0)  
-
-	move.l  #SprPat_Enemy,obj.Pat(a0)
-	move.w  #ENEMY_GFX,obj.Tile(a0)
-	move.b	#4,obj.Render(a0)
-	move.b  #4,obj.Priority(a0)
-	move.b  #24,obj.XRender(a0)
-	move.b	#180,dev.Timer+1(a0)
-
-;    	bsr.w	_objectFall
-;	bsr.w	_physBasicChkDown
-;	tst.w	d1
-;	bpl.s   .NoFloor2
-;	add.w	d1,obj.Y(a0)
-	move.b	#8,obj.Action(a0)
-.NoFloor2:
-	rts
-
 .Go:
         move.b  #22,obj.YRad(a0)
         move.b  #9,obj.XRad(a0)  
@@ -62,7 +41,7 @@ Enemy_Init:
 	move.b	#4,obj.Render(a0)
 	move.b  #4,obj.Priority(a0)
 	move.b  #24,obj.XRender(a0)
-	move.b	#180,dev.Timer+1(a0)
+	move.b	#100,dev.Timer+1(a0)
 
     	bsr.w	_objectFall
 	bsr.w	_physBasicChkDown
@@ -120,21 +99,6 @@ Enemy_Done:
 
 Enemy_Show:
  	bra.w	_objectDraw
-
-; ---------------------------------------------------------------------------
-Enemy_Backwards:
-	bset	#REND.XMIRR,obj.Render(a0)
-	move.b	#1,obj.Frame(a0)
-	subq.b  #1,dev.Timer+1(a0)	; Wait timer 1 depleted
-	bne.s	.Go
-	bclr	#REND.XMIRR,obj.Render(a0)
-	subq.b	#4,obj.Action(a0)
-	move.b	#4,obj.Frame(a0)
-	move.w	#-$400,obj.YSpeed(a0)
-	move.w	#$120,obj.XSpeed(a0)
-.Go
-.Wait:                                 
-	bra.w	_objectDraw
 
 ; ---------------------------------------------------------------------------
 
