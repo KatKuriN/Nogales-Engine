@@ -59,8 +59,7 @@ Enemy_Main:
 	move.b	#3,obj.Frame(a0)
 	move.w	#-$400,obj.YSpeed(a0)
 	move.w	#-$120,obj.XSpeed(a0)
-;	bra.s	Enemy_Done
-	rts
+	bra.s	Enemy_Done
 .Go
        	andi.w  #$FF,obj.Y(a0)        	; Clamp Y pos. to 256 pix. max    
 	subq.b  #1,dev.Timer(a0)	; Wait timer 2 depleted
