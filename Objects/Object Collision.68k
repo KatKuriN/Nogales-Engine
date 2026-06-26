@@ -115,7 +115,6 @@ _physFootColDown:
 ; reversing the movement directions
 
 _physUnkObjectFall:                       
-        rts
         move.l  obj.X(a0),d2
         move.w  obj.XSpeed(a0),d0
         ext.l   d0
@@ -133,7 +132,6 @@ _physUnkObjectFall:
 ; This only applies Y-speed and it also subtracts
 
 _physUnkFallReverse:                       
-        rts
         move.l  obj.Y(a0),d3
         move.w  obj.YSpeed(a0),d0
         subi.w  #PHYS_GRAVITY,d0
@@ -147,7 +145,6 @@ _physUnkFallReverse:
 ; Same as above, _objectSetSpeed
 
 _physUnkSetSpeed:    
-        rts
         move.l  obj.X(a0),d2
         move.l  obj.Y(a0),d3
         move.w  obj.XSpeed(a0),d0

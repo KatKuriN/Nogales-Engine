@@ -34,7 +34,7 @@ Enemy_Init:
 	rts
 
 .Backwards:
-        move.b  #19,obj.YRad(a0)
+        move.b  #20,obj.YRad(a0)
         move.b  #9,obj.XRad(a0)  
 
 	move.l  #SprPat_Enemy,obj.Pat(a0)
@@ -54,7 +54,7 @@ Enemy_Init:
 	rts
 
 .Go:
-        move.b  #19,obj.YRad(a0)
+        move.b  #22,obj.YRad(a0)
         move.b  #9,obj.XRad(a0)  
 
 	move.l  #SprPat_Enemy,obj.Pat(a0)
@@ -76,10 +76,12 @@ Enemy_Init:
 Enemy_Main:
 	subq.b  #1,dev.Timer+1(a0)	; Wait timer 1 depleted
 	bne.s	.Go
-	subq.b	#4,obj.Action(a0)
+	addq.b	#2,obj.Action(a0)
 	move.b	#3,obj.Frame(a0)
 	move.w	#-$400,obj.YSpeed(a0)
 	move.w	#-$120,obj.XSpeed(a0)
+;	bra.s	Enemy_Done
+	rts
 .Go
        	andi.w  #$FF,obj.Y(a0)        	; Clamp Y pos. to 256 pix. max    
 	subq.b  #1,dev.Timer(a0)	; Wait timer 2 depleted
@@ -104,7 +106,7 @@ Enemy_Done:
     	addi.w  #24,obj.YSpeed(a0)
 	tst.w	obj.YSpeed(a0)
 	bmi.s	.Wait
-	move.b	#3,obj.Frame(a0)
+	move.b	#4,obj.Frame(a0)
 	bsr.w	_physBasicChkDown
 	tst.w	d1
 	bpl.s   .Wait

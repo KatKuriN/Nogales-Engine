@@ -94,9 +94,9 @@ Player_Init:
 
 
 Player_Main:                             
-        andi.w  #$FF,obj.Y(a0)         ; Clamp Y pos. to 256 pix. max        
-        andi.w  #$FF,cameraAPosY.w
-
+        andi.w  #$1FF,obj.Y(a0)         ; Clamp Y pos. to 256 pix. max        
+        andi.w  #$1FF,cameraAPosY.w
+        bsr.w   _objectSetSpeed
 ;        tst.w   debug.w                 ; Skip if debug enabled
 ;        beq.s   .Skip
 ;        btst    #4,joypadPressMirr.w    ; Turn on editor if B pressed
@@ -161,7 +161,7 @@ Player_MainCtrl:                                 ; Status unset
         bsr.w   _physUpSlope
         bsr.w   _playInputChk
         bsr.w   _playRollChk
-        bsr.w   _objectSetSpeed
+ ;       bsr.w   _objectSetSpeed
         
         bsr.w   _physFootCollision
         bsr.w   _physChkFloorExit
@@ -170,7 +170,8 @@ Player_MainCtrl:                                 ; Status unset
 Player_AirCtrl:                                  ; Status air bit set
         bsr.w   _playJumpHeight
         bsr.w   _playAirCtrl
-        bsr.w   _objectFall
+        addi.w  #24,obj.YSpeed(a0)
+;        bsr.w   _objectSetSpeed
         bsr.w   _playAirDir
         bsr.w   _physAirCollision
         rts
@@ -179,7 +180,7 @@ Player_RollCtrl:                                 ; Status roll bit set
         bsr.w   _playJumpChk
         bsr.w   _physRollDown
         bsr.w   _playRollCalc
-        bsr.w   _objectSetSpeed
+;        bsr.w   _objectSetSpeed
         bsr.w   _physFootCollision
         bsr.w   _physChkFloorExit
         rts
@@ -187,10 +188,12 @@ Player_RollCtrl:                                 ; Status roll bit set
 Player_AirRollCtrl:                              ; Both statuses set
         bsr.w   _playJumpHeight
         bsr.w   _playAirCtrl
-        bsr.w   _objectFall
+        addi.w  #24,obj.YSpeed(a0)
+;        bsr.w   _objectSetSpeed
         bsr.w   _playAirDir
         bsr.w   _physAirCollision
         rts
+
 
 ; ---------------------------------------------------------------------------
 ; Main player movement function.
@@ -255,6 +258,7 @@ _playInputChk:
         muls.w  obj.Momentum(a0),d0 ; (momentum*sin) for Y speed 
         asr.l   #8,d0                
         move.w  d0,obj.YSpeed(a0)
+
 
         ; fall into _playHitWall
 
@@ -611,6 +615,7 @@ _playLevelLimits:
         move.w  #0,obj.YScr(a0)
         move.w  #0,obj.XSpeed(a0)
         move.w  #0,obj.Momentum(a0)
+        move.w  cameraAPosX.w,limitALeft.w
         rts
 
 ; ---------------------------------------------------------------------------
@@ -780,7 +785,7 @@ _physRollDown:
         bcc.s   .Exit
         move.b  obj.Angle(a0),d0
         jsr     (CalcSinCos).l
-        muls.w  #80,d0
+        muls.w  #128,d0
         asr.l   #8,d0
         tst.w   obj.Momentum(a0)
         bmi.s   .Left
